@@ -54,7 +54,7 @@ You can jump straight into `3_screening.ipynb` if you're only interested in expl
 
 ---
 
-### ⚙️ Calculation Scripts
+### Calculation Scripts
 
 To reproduce the full workflow from scratch, follow the steps below:
 
