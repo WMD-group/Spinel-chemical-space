@@ -60,22 +60,21 @@ To reproduce the full workflow from scratch, follow the steps below:
 
 1. **Chemical filtering and MP data retrieval**  
    → `1_MP_ICSD_SMACT.ipynb`  
-   Performs SMACT-based chemical validation and extracts relevant entries from the Materials Project.  
-   *(Note: ICSD data must be downloaded and processed manually due to licensing restrictions.)*
+   > Performs SMACT-based chemical validation and extracts relevant entries from the Materials Project.  
+   > *(Note: ICSD data must be downloaded and processed manually due to licensing restrictions.)*
 
 2. **Structure optimization using MACE**  
    → `calculation_scripts/MACE/MACE_calculation.py`  
-   Optimizes spinel structures using the MACE-MP-0a model.
+   > Optimizes spinel structures using the MACE-MP-0a model.
 
 3. **_CLscore_ prediction via Positive-Unlabeled Learning (PUL)**  
    → `calculation_scripts/PUL_CLscore/PUL_data_preparation.ipynb`  
-   Prepares input for the Synthesizability-stoi-CGNF model.  
-   > *The PUL model cannot currently be installed via `pip` or imported directly into Jupyter notebooks. Instead, it must be cloned and executed from its own repository. Follow the instructions in the [Synthesizability-stoi-CGNF repository](https://github.com/kaist-amsg/Synthesizability-stoi-CGNF) to run the calculations and then bring the results back into this workflow.*
+   > Prepares input for the Synthesizability-stoi-CGNF model. The PUL model cannot currently be installed via `pip` or imported directly into Jupyter notebooks. Instead, it must be cloned and executed from its own repository. Follow the instructions in the [Synthesizability-stoi-CGNF repository](https://github.com/kaist-amsg/Synthesizability-stoi-CGNF) to run the calculations and then bring the results back into this workflow.
 
 4. **Thermodynamic stability via _E_<sub>hull</sub>**  
    → `calculation_scripts/Ehull/Ehull_calculation.ipynb`  
-   Calculates the _E_<sub>hull</sub> using formation energies from MACE.
+   > Calculates the _E_<sub>hull</sub> using formation energies from MACE.
 
 5. **Final filtering and ranking with _S_<sub>score</sub>**  
    → `3_screening.ipynb`  
-   Combines _E_<sub>hull</sub> and _CLscore_ into _S_<sub>score</sub> to identify the promising candidates.
+   > Combines _E_<sub>hull</sub> and _CLscore_ into _S_<sub>score</sub> to identify the promising candidates.
