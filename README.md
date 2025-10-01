@@ -1,107 +1,81 @@
-# 🧪 Data-Driven Exploration of AB<sub>2</sub>X<sub>4</sub> (X = O, S, Se, Te) Spinel Chemical Space
+# Data-Driven Exploration of AB<sub>2</sub>X<sub>4</sub> (X = O, S, Se, Te) Spinel Chemical Space
 
 This repository contains the complete high-throughput screening (HTS) workflow, data, and code for identifying potentially synthesizable **AB<sub>2</sub>X<sub>4</sub>** spinel compounds. The framework integrates **materials databases**, **empirical heuristics**, and **machine learning predictions** to uncover novel, unexplored candidates.
 
 ---
 
-## 🚀 Overview
+## Overview
 
-Spinels are a versatile class of materials used in applications ranging from energy storage to catalysis. Structurally similar to MgAl<sub>2</sub>O<sub>4</sub>, they consist of A- and B-site cations occupying tetrahedral and octahedral sites, respectively, within a tightly packed cubic lattice of X anions, forming the **Fd3̅m** space group. Spinels also exhibit **cation disordering**, forming "normal" and "inverse" phases, which can be described using the **cation inversion parameter** _x_, where x ∈ [0, 1].
+Spinels are a versatile class of materials used in applications ranging from energy storage to catalysis. Their crystal structures are similar to the mineral MgAl<sub>2</sub>O<sub>4</sub>, where the A- and B-site cations fill the tetrahedral and octahedral sites, respectively, within a tightly packed cubic structure of X anions, resulting in the space group Fd3̅m. They also possess cation disordering behavior where A and B cations can exchange their positions, forming either "normal" or "inverse" phases. This behavior can be explained using the cation inversion parameter (_x_), where x ∈ [0,1] corresponds to the degree of inversion from fully normal to fully and inverse spinel structures.
 
-Despite their broad utility, much of the spinel chemical space remains unexplored. This project targets spinels formed from the first 83 elements with four anions: O, S, Se, and Te. A multi-stage HTS pipeline is developed to filter candidates through:
+However, much of their chemical space remains underexplored. This project aims to explore spinel chemical space for potentially synthesisable compounds within the first 83 elements in the periodic table. We focus our investigation on oxide and chalcogen (sulfides, selenides, and tellurides) spinels. To tackle this vast design space, we developed a high-throughput screening (HTS) framework by combining several computational tools that systematically filters candidates through three main filtering stages:
 
-- ⚗️ **Chemical filtering** (valency, charge balance)
-- ⚛️ **Thermodynamic filtering** (stability via _E_<sub>hull</sub>)
-- 🤖 **Data-driven filtering** (via _CLscore_)
+- **Chemical filtering** (charge neutrality, electronegativity balance)
+- **Thermodynamic filtering** (_E_<sub>hull</sub>)
+- **Data-driven filtering** (_CLscore_)
 
-A key innovation is the introduction of the **Unified Crystal Likelihood Score**, or **_S_<sub>score</sub>**, which combines thermodynamic and data-driven metrics to rank compositions by their synthesizability. Dynamical stability is further verified through **phonon dispersion** analysis.
-
----
-
-## 🧩 Workflow and Tools
-
-We generate all possible spinel compositions using the first 83 elements and four anions (O, S, Se, Te). The screening workflow includes:
-
-- 🧪 Chemical validity check using [**SMACT**](https://github.com/WMD-group/SMACT)
-- ⚛️ Structural optimization with [**MACE-MP-0a**](https://github.com/ACEsuit/mace)
-- 🧮 _E_<sub>hull</sub> calculation via [**Pymatgen**](https://github.com/materialsproject/pymatgen)
-- 🤖 _CLscore_ prediction using [**Synthesizability-stoi-CGNF**](https://github.com/kaist-amsg/Synthesizability-stoi-CGNF)
-- 📊 Unified crystal likelihood scoring (_S_<sub>score</sub>)
-- 🧊 Phonon dispersion analysis via [**MatCalc**](https://github.com/materialsvirtuallab/matcalc)
-
-All predictions are compared against known spinels from the [**Materials Project**](https://next-gen.materialsproject.org) and [**ICSD**](https://www.psds.ac.uk/icsd).
+A key feature of this work is the introduction of a new unified crystal likelihood metric, the 'super score' (_S_<sub>score</sub>), which combines thermodynamic filter (_E_<sub>hull</sub>) with data-driven filter (CLscore). This allows for more robust candidate ranking across thousands of compositions.
 
 ---
 
-## 📊 Key Results
+## Workflow and Tools
 
-- 🔍 **55,112** total compositions (including inverse structures)
-- ✅ **2,303** potentially synthesizable candidates
-- 🧊 **12** dynamically stable structures among top 40
-- ♻️ **66.9%** recovery of known oxide spinels
+The screening workflow and tools includes:
+
+- Chemical validity check using [**SMACT**](https://github.com/WMD-group/SMACT)
+- Structural optimization with [**MACE-MP-0a**](https://github.com/ACEsuit/mace)
+- _E_<sub>hull</sub> calculation via [**Pymatgen**](https://github.com/materialsproject/pymatgen)
+- _CLscore_ prediction using [**Synthesizability-stoi-CGNF**](https://github.com/kaist-amsg/Synthesizability-stoi-CGNF)
+- Unified crystal likelihood scoring (_S_<sub>score</sub>)
+- Phonon dispersion analysis via [**MatCalc**](https://github.com/materialsvirtuallab/matcalc) using [**MACE-MP-0a**](https://github.com/ACEsuit/mace)
+
+We begin by generating all possible spinel compositions composed of the first 83 elements in the periodic table and four anions (O, S, Se, and Te). These compositions are first filtered using SMACT for chemically valid spinel compounds and pass through structural optimisation using MACE-MP-0a. Pymatgen package is then used to calculate _E_<sub>hull</sub> using energy from MACE-MP-0a. Synthesizability-stoi-CGNF model is adopted to further refine the screening through a metric called CLscore. Both E<sub>hull</sub> and CLscore are combined to introduce a single unified metric, _S_<sub>score</sub> to quantify crytal likelihood of a compound based on two different perspectives. To determine preferred configurations between normal or inverse, configuration with lower _E_<sub>hull</sub> is chosen as the representative of the composition. To validate our _S_<sub>score</sub>, we compare our results with known spinels on [Materials Project (MP)](https://next-gen.materialsproject.org) and [Inorganic Crystal Structure Database (ICSD)](https://www.psds.ac.uk/icsd). Furthermore, phonon dispersion calculations are carried out on the top 10 candidates, ranked by _S_<sub>score</sub>, for each anion type to confirm the dynamical stability of the structures.
 
 ---
 
-## 💻 Getting Started
+## Getting Started
 
-Install dependencies via `pip`:
+To use this repo, simply start with installations of all the required packages using `pip`.
 
-```bash```
 `pip install numpy matplotlib seaborn pandas smact pymatgen mp-api mace-torch ase`
 
 ---
-## 📘 Notebooks and Usage
+## Notebooks and Usage
 
-You can directly run the screening using `3_screening.ipynb` — all required data is provided.
-
-### 🧠 Jupyter Notebooks
+This repo contains of three main notebook, 
 
 | Notebook | Description |
 |----------|-------------|
 | `1_MP_ICSD_SMACT.ipynb` | Retrieves Materials Project entries, cleans ICSD data, and applies SMACT chemical validity filters. |
 | `2_chemical_space_plot.ipynb` | Plots chemical space with known and valid spinel compositions from MP/ICSD and SMACT filters. |
-| `3_screening.ipynb` | Performs the final screening using _E_<sub>hull</sub>, _CLscore_, and _S_<sub>score</sub> to identify top candidates. |
+| `3_screening.ipynb` | Performs the final screening using _E_<sub>hull</sub>, _CLscore_, and _S_<sub>score</sub> to identify top candidates, and plots. |
 
-You can jump straight into `3_screening.ipynb` if you're only interested in exploring the filtered chemical space. All necessary data is included.
+You can jump straight into `3_screening.ipynb` if you're only interested in exploring the filtered chemical space. All necessary data is already included. Furthermore, if you would like to explore different chemical system, you can change system in `1_MP_ICSD_SMACT.ipynb` to the targeted system and plot with `2_chemical_space_plot.ipynb`.
 
 ---
 
-### 🛠️ Calculation Scripts
+### ⚙️ Calculation Scripts
 
-If you'd like to **reproduce the full workflow from scratch**, follow the steps below:
+To reproduce the full workflow from scratch, follow the steps below:
 
-1. **SMACT filtering & MP data retrieval**  
-   → `notebooks/1_MP_ICSD_SMACT.ipynb`
+1. **Chemical filtering and MP data retrieval**  
+   → `1_MP_ICSD_SMACT.ipynb`  
+   Performs SMACT-based chemical validation and extracts relevant entries from the Materials Project.  
+   *(Note: ICSD data must be downloaded and processed manually due to licensing restrictions.)*
 
-2. **Structure optimization with MACE**  
-   → `calculation_scripts/MACE/MACE_calculation.py`
+2. **Structure optimization using MACE**  
+   → `calculation_scripts/MACE/MACE_calculation.py`  
+   Optimizes spinel structures using the MACE-MP-0a model.
 
-3. **_CLscore_ prediction using PUL model**  
-   → `calculation_scripts/PUL_CLscore/PUL_data_preparation.ipynb`
+3. **_CLscore_ prediction via Positive-Unlabeled Learning (PUL)**  
+   → `calculation_scripts/PUL_CLscore/PUL_data_preparation.ipynb`  
+   Prepares input for the Synthesizability-stoi-CGNF model.  
+   > *The PUL model cannot currently be installed via `pip` or imported directly into Jupyter notebooks. Instead, it must be cloned and executed from its own repository. Follow the instructions in the [Synthesizability-stoi-CGNF repository](https://github.com/kaist-amsg/Synthesizability-stoi-CGNF) to run the calculations and then bring the results back into this workflow.*
 
-4. **_E_<sub>hull</sub> calculation**  
-   → `calculation_scripts/Ehull/Ehull_calculation.ipynb`
+4. **Thermodynamic stability via _E_<sub>hull</sub>**  
+   → `calculation_scripts/Ehull/Ehull_calculation.ipynb`  
+   Calculates the _E_<sub>hull</sub> using formation energies from MACE.
 
 5. **Final filtering and ranking with _S_<sub>score</sub>**  
-   → `notebooks/3_screening.ipynb`
-
-> **Note**: ICSD data is manually curated due to licensing restrictions and is not publicly redistributed here.
-
-To use this repo, simply start with installations of all the required packages using pip. However, if you prefer installing from the source code, please refer to their repository.
-pip install numpy, matplotlib, seaborn, pandas, smact, pymatgen, mp-api, mace-torch, ase
-
-This repo contains of three main notebook, 
-
-1_MP_ICSD_SMACT.ipynb shows how to perform SMACT screening, data mining from MP, and data cleaning from ICSD, 
-2_chemical_space_plot.ipynb shows how to plot chemical space of compositions allowed by SMACT with known data from MP and ICSD, and
-3_screening.ipynb shows how to screen for candidates using _E_<sub>hull</sub>, _CLscore_, and _S_<sub>score</sub>.
-
-All the required data has been provided so you don't need to run any calculations to replicate this work. You can directly jump to 3_screening.ipynb if you would like to perform chemical space screening of spinels. The idea for 1_MP_ICSD_SMACT.ipynb and 2_chemical_space_plot.ipynb is that you can perform quick SMACT screening for the chemically valid chemical space of any system. You only need to change the system in the scripts to your targeted one. More details are provided in the notebooks.
-
-However, if you would like to run the calculations please refer to these scripts:
-
-1) Start with SMACT screening and data mining from MP (ICSD data are manually downloaded so I don't have any script for that) using 1_MP_ICSD_SMACT.ipynb
-2) Perform MACE calculations using calculation_scripts/MACE/MACE_calculation.py
-3) Perform PUL calculations for _CLscore_ using calculation_scripts/PUL_CLscore/PUL_data_preparation.ipynb
-4) Perform _E_<sub>hull</sub> calculations once MACE calculations are finished using calculation_scripts/Ehull/Ehull_calculation.ipynb
-5) Combine all the results and perform data analysis using 3_screening.ipynb
+   → `3_screening.ipynb`  
+   Combines _E_<sub>hull</sub> and _CLscore_ into _S_<sub>score</sub> to identify the promising candidates.
