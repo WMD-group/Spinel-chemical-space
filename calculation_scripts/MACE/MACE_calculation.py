@@ -134,4 +134,4 @@ for i in range(len(results)):
     results_columns.append(results[i])
 
 df_results = pd.DataFrame(results_columns[1:], columns=results_columns[0])
-df_results.to_csv(f'{type_anion_directories[type_anion]}/results_{type_spinels}.csv', index=False)
+df_results.to_csv(f'{type_anion_directories[type_anion]}/results_{type_spinels}_{type_anion_lists[type_anion]}.csv', index=False)
