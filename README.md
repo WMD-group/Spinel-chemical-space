@@ -50,7 +50,7 @@ This repo contains of three main notebook,
 | `2_chemical_space_plot.ipynb` | Plots chemical space with known and valid spinel compositions from MP/ICSD and SMACT filters. |
 | `3_screening.ipynb` | Performs the final screening using _E_<sub>hull</sub>, _CLscore_, and _S_<sub>score</sub> to identify top candidates, and plots. |
 
-You can jump straight into `3_screening.ipynb` if you're only interested in exploring the filtered chemical space. All necessary data is already included. Furthermore, if you would like to explore different chemical system, you can change system in `1_MP_ICSD_SMACT.ipynb` to the targeted system and plot with `2_chemical_space_plot.ipynb`.
+You can jump straight into `3_screening.ipynb` if you're only interested in exploring the filtered chemical space. All necessary data is already included. Furthermore, if you would like to explore different chemical system, you can change the chemical system in `1_MP_ICSD_SMACT.ipynb` to the targeted system and plot with `2_chemical_space_plot.ipynb`.
 
 ---
 
