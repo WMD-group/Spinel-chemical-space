@@ -37,9 +37,9 @@ We begin by generating all possible spinel compositions composed of the first 83
 
 ```
 Spinel-chemical-space/
-├── 1_MP_ICSD_SMACT.ipynb              # Chemical filtering, database retrieval, and screening
-├── 2_chemical_space_plot.ipynb        # Chemical space visualisation
-├── 3_plotting.ipynb                   # Publication figures
+├── 1_MP_ICSD_SMACT.ipynb              # Chemical space generation and database retrieval
+├── 2_screening.ipynb                  # Candidates screening
+├── 3_plotting.ipynb                   # Results visualization
 ├── calculation_scripts/
 │   ├── MACE/                          # Structure optimisation with MACE-MP-0a
 │   ├── Ehull/                         # Energy above hull calculations
@@ -84,9 +84,9 @@ This repository contains three main notebooks:
 
 | Notebook | Description |
 |----------|-------------|
-| `1_MP_ICSD_SMACT.ipynb` | Retrieves Materials Project entries, cleans ICSD data, applies SMACT chemical validity filters, and performs screening. |
-| `2_chemical_space_plot.ipynb` | Visualises the spinel chemical space across different anion types. |
-| `3_plotting.ipynb` | Generates all publication figures as shown in the manuscript. |
+| `1_MP_ICSD_SMACT.ipynb` |
+| `2_screening.ipynb.ipynb` |
+| `3_plotting.ipynb` |
 
 All necessary data is already included in the `data/` directory. If you would like to explore a different chemical system, you can change the chemical system in `1_MP_ICSD_SMACT.ipynb` to the targeted system.
 
@@ -114,9 +114,8 @@ To reproduce the full workflow from scratch, follow the steps below:
    > Calculates the _E_<sub>hull</sub> using formation energies from MACE.
 
 5. **Final filtering and ranking with _S_<sub>score</sub>**
-   → `1_MP_ICSD_SMACT.ipynb`
+   → `2_screening.ipynb.ipynb` and `3_plotting.ipynb`
    > Combines _E_<sub>hull</sub> and _CLscore_ into _S_<sub>score</sub> to identify the promising candidates.
-
 ---
 
 ## Supplementary Analysis
