@@ -82,8 +82,8 @@ pip install numpy matplotlib seaborn pandas smact pymatgen mp-api==0.45 mace-tor
 
 This repository contains three main notebooks:
 
-| Notebook | Description |
-|----------|-------------|
+| Notebook |
+|----------|
 | `1_MP_ICSD_SMACT.ipynb` |
 | `2_screening.ipynb.ipynb` |
 | `3_plotting.ipynb` |
