@@ -46,7 +46,7 @@ Spinel-chemical-space/
 │   └── PUL_CLscore/                   # CLscore data preparation
 ├── data/                              # All intermediate and final datasets
 │   ├── SMACT/                         # SMACT-filtered compositions
-│   ├── MP/ & ICSD/ & MP_ICSD/        # Experimental spinel data
+│   ├── MP/ & ICSD/ & MP_ICSD/         # Experimental spinel data
 │   ├── MACE/                          # MACE optimisation results
 │   ├── Ehull/                         # Ehull results
 │   ├── PUL/                           # CLscore predictions
