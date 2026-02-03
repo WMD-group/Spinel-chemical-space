@@ -37,8 +37,7 @@ We begin by generating all possible spinel compositions composed of the first 83
 
 ```
 Spinel-chemical-space/
-├── 1_MP_ICSD_SMACT.ipynb              # Chemical filtering and database retrieval
-├── 2_screening.ipynb                  # Screening and unified scoring
+├── 1_MP_ICSD_SMACT.ipynb              # Chemical filtering, database retrieval, and screening
 ├── 2_chemical_space_plot.ipynb        # Chemical space visualisation
 ├── 3_plotting.ipynb                   # Publication figures
 ├── calculation_scripts/
@@ -74,19 +73,18 @@ Spinel-chemical-space/
 Install all required packages using `pip`:
 
 ```bash
-pip install numpy matplotlib seaborn pandas smact pymatgen mp-api mace-torch ase
+pip install numpy matplotlib seaborn pandas smact pymatgen mp-api==0.45 mace-torch ase
 ```
 
 ---
 
 ## Notebooks and Usage
 
-This repository contains four main notebooks:
+This repository contains three main notebooks:
 
 | Notebook | Description |
 |----------|-------------|
-| `1_MP_ICSD_SMACT.ipynb` | Retrieves Materials Project entries, cleans ICSD data, and applies SMACT chemical validity filters. |
-| `2_screening.ipynb` | Performs the final screening using _E_<sub>hull</sub>, _CLscore_, and _S_<sub>score</sub> to identify top candidates. |
+| `1_MP_ICSD_SMACT.ipynb` | Retrieves Materials Project entries, cleans ICSD data, applies SMACT chemical validity filters, and performs screening. |
 | `2_chemical_space_plot.ipynb` | Visualises the spinel chemical space across different anion types. |
 | `3_plotting.ipynb` | Generates all publication figures as shown in the manuscript. |
 
@@ -116,7 +114,7 @@ To reproduce the full workflow from scratch, follow the steps below:
    > Calculates the _E_<sub>hull</sub> using formation energies from MACE.
 
 5. **Final filtering and ranking with _S_<sub>score</sub>**
-   → `2_screening.ipynb`
+   → `1_MP_ICSD_SMACT.ipynb`
    > Combines _E_<sub>hull</sub> and _CLscore_ into _S_<sub>score</sub> to identify the promising candidates.
 
 ---
