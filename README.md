@@ -33,24 +33,64 @@ We begin by generating all possible spinel compositions composed of the first 83
 
 ---
 
-## Getting Started
+## Repository Structure
 
-To use this repo, simply start with installations of all the required packages using `pip`.
-
-`pip install numpy matplotlib seaborn pandas smact pymatgen mp-api mace-torch ase`
+```
+Spinel-chemical-space/
+├── 1_MP_ICSD_SMACT.ipynb              # Chemical filtering and database retrieval
+├── 2_screening.ipynb                  # Screening and unified scoring
+├── 2_chemical_space_plot.ipynb        # Chemical space visualisation
+├── 3_plotting.ipynb                   # Publication figures
+├── calculation_scripts/
+│   ├── MACE/                          # Structure optimisation with MACE-MP-0a
+│   ├── Ehull/                         # Energy above hull calculations
+│   └── PUL_CLscore/                   # CLscore data preparation
+├── data/                              # All intermediate and final datasets
+│   ├── SMACT/                         # SMACT-filtered compositions
+│   ├── MP/ & ICSD/ & MP_ICSD/        # Experimental spinel data
+│   ├── MACE/                          # MACE optimisation results
+│   ├── Ehull/                         # Ehull results
+│   ├── PUL/                           # CLscore predictions
+│   └── Final_data/                    # Final merged results per anion type
+├── MACE_verifications/                # MACE vs DFT (VASP) validation
+├── Orbital_radii/                     # Orbital radii analysis
+├── plots/                             # Generated publication figures (PDF)
+├── configs/                           # Matplotlib configuration
+├── font/                              # Font files for plotting
+└── LICENSE                            # MIT License
+```
 
 ---
+
+## Getting Started
+
+### Prerequisites
+
+- Python 3.9+
+- A [Materials Project API key](https://next-gen.materialsproject.org/api) (required for querying MP data in `1_MP_ICSD_SMACT.ipynb`)
+
+### Installation
+
+Install all required packages using `pip`:
+
+```bash
+pip install numpy matplotlib seaborn pandas smact pymatgen mp-api mace-torch ase
+```
+
+---
+
 ## Notebooks and Usage
 
-This repo contains of three main notebook, 
+This repository contains four main notebooks:
 
 | Notebook | Description |
 |----------|-------------|
 | `1_MP_ICSD_SMACT.ipynb` | Retrieves Materials Project entries, cleans ICSD data, and applies SMACT chemical validity filters. |
-| `2_chemical_space_plot.ipynb` | Plots chemical space with known and valid spinel compositions from MP/ICSD and SMACT filters. |
-| `3_screening.ipynb` | Performs the final screening using _E_<sub>hull</sub>, _CLscore_, and _S_<sub>score</sub> to identify top candidates, and plots. |
+| `2_screening.ipynb` | Performs the final screening using _E_<sub>hull</sub>, _CLscore_, and _S_<sub>score</sub> to identify top candidates. |
+| `2_chemical_space_plot.ipynb` | Visualises the spinel chemical space across different anion types. |
+| `3_plotting.ipynb` | Generates all publication figures as shown in the manuscript. |
 
-You can jump straight into `3_screening.ipynb` if you're only interested in exploring the filtered chemical space. All necessary data is already included. Furthermore, if you would like to explore different chemical system, you can change the chemical system in `1_MP_ICSD_SMACT.ipynb` to the targeted system and plot with `2_chemical_space_plot.ipynb`.
+All necessary data is already included in the `data/` directory. If you would like to explore a different chemical system, you can change the chemical system in `1_MP_ICSD_SMACT.ipynb` to the targeted system.
 
 ---
 
@@ -75,6 +115,21 @@ To reproduce the full workflow from scratch, follow the steps below:
    → `calculation_scripts/Ehull/Ehull_calculation.ipynb`  
    > Calculates the _E_<sub>hull</sub> using formation energies from MACE.
 
-5. **Final filtering and ranking with _S_<sub>score</sub>**  
-   → `3_screening.ipynb`  
+5. **Final filtering and ranking with _S_<sub>score</sub>**
+   → `2_screening.ipynb`
    > Combines _E_<sub>hull</sub> and _CLscore_ into _S_<sub>score</sub> to identify the promising candidates.
+
+---
+
+## Supplementary Analysis
+
+| Directory | Description |
+|-----------|-------------|
+| `MACE_verifications/` | Validation of MACE-MP-0a predictions against DFT (VASP) calculations, including parity plots for lattice parameters and total energies. |
+| `Orbital_radii/` | Analysis of the relationship between element orbital radii and spinel formation preferences. |
+
+---
+
+## License
+
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
