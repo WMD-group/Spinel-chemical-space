@@ -52,7 +52,10 @@ for i in range(len(smact_poscar)):
         lines[line_number_to_edit - 1] = new_text + '\n'
         with open(edit_poscar, 'w') as file:
             file.writelines(lines)
-        os.system(f'cp {edit_poscar} {type_anion_directories[type_anion]}/1_initial_structure_dir/POSCAR_{type_spinels}_{type_anion_lists[type_anion]}_{i}')
+        output_poscar_dir = f'{type_anion_directories[type_anion]}/1_initial_structure_dir'
+        if not os.path.exists(output_poscar_dir):
+            os.makedirs(output_poscar_dir)
+        os.system(f'cp {edit_poscar} {output_poscar_dir}/POSCAR_{type_spinels}_{type_anion_lists[type_anion]}_{i}')
 
 start_datetime = datetime.now()
 start_formatted_datetime = start_datetime.strftime("%A-%d-%m-%Y %H:%M:%S")
@@ -80,7 +83,14 @@ def optimize_atoms(
     structure.calc = calc
 
     cell_filter = FrechetCellFilter(structure)
-    result=FIRE(cell_filter, trajectory=f'{type_anion_directories[type_anion]}/3_traj_dir/optimization_{type_spinels}_{type_anion_lists[type_anion]}_{i}.traj', logfile=f'{type_anion_directories[type_anion]}/4_log_dir/optimization_{type_spinels}_{type_anion_lists[type_anion]}_{i}.log')
+    traj_dir = f'{type_anion_directories[type_anion]}/3_traj_dir'
+    log_dir = f'{type_anion_directories[type_anion]}/4_log_dir'
+    if not os.path.exists(traj_dir):
+        os.makedirs(traj_dir)
+    if not os.path.exists(log_dir):
+        os.makedirs(log_dir)
+        
+    result=FIRE(cell_filter, trajectory=f'{traj_dir}/optimization_{type_spinels}_{type_anion_lists[type_anion]}_{i}.traj', logfile=f'{log_dir}/optimization_{type_spinels}_{type_anion_lists[type_anion]}_{i}.log')
     result.run(fmax=fmax, steps=max_steps)
 
     final_energy = structure.get_potential_energy()
@@ -114,7 +124,10 @@ def optimize_atoms(
     final_cell_lengths_angles = structure.cell.cellpar()
     final_volume = structure.get_volume()
     num_steps = result.get_number_of_steps()
-    write(f'{type_anion_directories[type_anion]}/2_final_structure_dir/CIF_{type_spinels}_{type_anion_lists[type_anion]}_{i}_final.cif', structure, format='cif')
+    output_struct_dir = f'{type_anion_directories[type_anion]}/2_final_structure_dir'
+    if not os.path.exists(output_struct_dir):
+        os.makedirs(output_struct_dir)
+    write(f'{output_struct_dir}/CIF_{type_spinels}_{type_anion_lists[type_anion]}_{i}_final.cif', structure, format='cif')
     return (compositions, final_cell_lengths_angles[0], final_cell_lengths_angles[1], final_cell_lengths_angles[2], final_cell_lengths_angles[3], final_cell_lengths_angles[4], final_cell_lengths_angles[5], final_energy, final_volume, num_steps, conv, force_conv, _fmax)
 
 # Define column names for the CSV
