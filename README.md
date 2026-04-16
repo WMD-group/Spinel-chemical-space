@@ -127,6 +127,9 @@ To reproduce the full workflow from scratch, follow the steps below:
 
 ---
 
+This work has been published here: https://pubs.rsc.org/en/content/articlelanding/2026/dd/d6dd00064a
+
+---
 ## License
 
 This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
